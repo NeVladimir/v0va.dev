@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v0va.dev</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000000;
+            overflow: hidden;
+        }
+        #animated-text {
+            font-size: 5rem;
+            transition: font-family 0.1s ease-in-out;
+            text-align: center;
+            user-select: none;
+            color: white;
+        }
+
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+<div id="animated-text">v0va.dev</div>
+
+<script>
+  const textElement = document.getElementById('animated-text');
+
+  const fonts = [
+    'Arial', 'Verdana', 'Helvetica', 'Tahoma', 'Trebuchet MS',
+    'Times New Roman', 'Georgia', 'Garamond', 'Courier New', 'Brush Script MT',
+    'Impact', 'Comic Sans MS', 'Palatino', 'Arial Black', 'Monaco', 'Lucida Console'
+  ];
+
+  function changeFont() {
+    const randomIndex = Math.floor(Math.random() * fonts.length);
+    const randomFont = fonts[randomIndex];
+    textElement.style.fontFamily = randomFont;
+    textElement.style.fontStyle = Math.random() > 0.5 ? 'italic' : 'normal';
+    textElement.style.fontWeight = Math.random() > 0.5 ? 'bold' : 'normal';
+  }
+
+  setInterval(changeFont, 100);
+</script>
+</body>
+</html>
