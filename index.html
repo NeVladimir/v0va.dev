@@ -13,6 +13,7 @@
             background-color: #000000;
             overflow: hidden;
         }
+
         #animated-text {
             font-size: 5rem;
             transition: font-family 0.1s ease-in-out;
@@ -24,7 +25,9 @@
     </style>
 </head>
 <body>
-<div id="animated-text">v0va.dev</div>
+<a href="https://www.linkedin.com/in/nevladimir/">
+    <div id="animated-text">v0va.dev</div>
+</a>
 
 <script>
   const textElement = document.getElementById('animated-text');
@@ -32,10 +35,10 @@
   const fonts = [
     'Arial', 'Verdana', 'Helvetica', 'Tahoma', 'Trebuchet MS',
     'Times New Roman', 'Georgia', 'Garamond', 'Courier New', 'Brush Script MT',
-    'Impact', 'Comic Sans MS', 'Palatino', 'Arial Black', 'Monaco', 'Lucida Console'
+    'Impact', 'Comic Sans MS', 'Palatino', 'Arial Black', 'Monaco', 'Lucida Console',
   ];
 
-  function changeFont() {
+  function changeFont () {
     const randomIndex = Math.floor(Math.random() * fonts.length);
     const randomFont = fonts[randomIndex];
     textElement.style.fontFamily = randomFont;
