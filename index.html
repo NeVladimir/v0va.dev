@@ -22,15 +22,36 @@
             color: white;
         }
 
+        #mouse-spotlight {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            mix-blend-mode: screen;
+        }
+
     </style>
 </head>
 <body>
+<div id="mouse-spotlight"></div>
 <a href="https://www.linkedin.com/in/nevladimir/">
     <div id="animated-text">v0va.dev</div>
 </a>
 
 <script>
   const textElement = document.getElementById('animated-text');
+  const spotlight = document.getElementById('mouse-spotlight');
+
+  window.addEventListener('mousemove', (e) => {
+    spotlight.style.left = e.clientX + 'px';
+    spotlight.style.top = e.clientY + 'px';
+  });
 
   const fonts = [
     'Arial', 'Verdana', 'Helvetica', 'Tahoma', 'Trebuchet MS',
