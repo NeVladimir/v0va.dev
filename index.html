@@ -46,6 +46,7 @@
     textElement.style.fontFamily = randomFont;
     textElement.style.fontStyle = Math.random() > 0.5 ? 'italic' : 'normal';
     textElement.style.fontWeight = Math.random() > 0.5 ? 'bold' : 'normal';
+    textElement.textContent = Math.random() > 0.05 ? 'v0va.dev' : 'v0va!dev';
   }
 
   setInterval(changeFont, 100);
