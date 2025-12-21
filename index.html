@@ -12,6 +12,8 @@
             align-items: center;
             background-color: #000000;
             overflow: hidden;
+            --x: 50%;
+            --y: 50%;
         }
 
         #animated-text {
@@ -22,13 +24,46 @@
             color: white;
         }
 
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .text-box {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #sub-text {
+            margin-top: 10px;
+            font-size: 1.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 10px 20px;
+            font-weight: bold;
+            user-select: none;
+            color: #626262F4;
+
+            background: radial-gradient(
+                    circle 100px at var(--sub-x, -1000px) var(--sub-y, -1000px),
+                    rgba(98, 98, 98, 0.96) 0%,
+                    rgba(255, 255, 255, 0) 100%
+            );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         #mouse-spotlight {
             position: fixed;
             top: 0;
             left: 0;
             width: 400px;
             height: 400px;
-            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
             border-radius: 50%;
             pointer-events: none;
             transform: translate(-50%, -50%);
@@ -40,17 +75,33 @@
 </head>
 <body>
 <div id="mouse-spotlight"></div>
-<a href="https://www.linkedin.com/in/nevladimir/">
-    <div id="animated-text">v0va.dev</div>
-</a>
+<div class="content-wrapper">
+    <div class="text-box">
+        <a href="https://www.linkedin.com/in/nevladimir/" style="text-decoration: none;">
+            <div id="animated-text">v0va.dev</div>
+        </a>
+    </div>
+    <div id="sub-text">v0va@v0va.dev</div>
+</div>
 
 <script>
   const textElement = document.getElementById('animated-text');
   const spotlight = document.getElementById('mouse-spotlight');
+  const subText = document.getElementById('sub-text');
 
   window.addEventListener('mousemove', (e) => {
-    spotlight.style.left = e.clientX + 'px';
-    spotlight.style.top = e.clientY + 'px';
+    const x = e.clientX;
+    const y = e.clientY;
+
+    spotlight.style.left = x + 'px';
+    spotlight.style.top = y + 'px';
+
+    const rect = subText.getBoundingClientRect();
+    const localX = x - rect.left;
+    const localY = y - rect.top;
+
+    subText.style.setProperty('--sub-x', localX + 'px');
+    subText.style.setProperty('--sub-y', localY + 'px');
   });
 
   const fonts = [
