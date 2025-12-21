@@ -47,9 +47,18 @@
     textElement.style.fontStyle = Math.random() > 0.5 ? 'italic' : 'normal';
     textElement.style.fontWeight = Math.random() > 0.5 ? 'bold' : 'normal';
     textElement.textContent = Math.random() > 0.05 ? 'v0va.dev' : 'v0va!dev';
+
+    const isFlipped = Math.random() > 0.8;
+    const isMirrored = Math.random() > 0.8;
+
+    let transform = '';
+    if (isFlipped) transform += ' rotate(180deg)';
+    if (isMirrored) transform += ' scaleX(-1)';
+
+    textElement.style.transform = transform || 'none';
   }
 
-  setInterval(changeFont, 100);
+  setInterval(changeFont, 120);
 </script>
 </body>
 </html>
