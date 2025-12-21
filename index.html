@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>v0va.dev</title>
     <style>
         body, html {
             height: 100%;
             margin: 0;
+            padding: 20;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -32,6 +34,7 @@
 
         .text-box {
             height: 120px;
+            padding: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -61,14 +64,23 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 400px;
-            height: 400px;
+            width: 600px;
+            height: 600px;
             background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
             border-radius: 50%;
             pointer-events: none;
             transform: translate(-50%, -50%);
             z-index: 2;
             mix-blend-mode: screen;
+        }
+
+        @media (max-width: 600px) {
+            #animated-text {
+                font-size: 4rem;
+            }
+            .text-box {
+                height: 80px;
+            }
         }
 
     </style>
@@ -90,12 +102,15 @@
   const subText = document.getElementById('sub-text');
 
   function updateSpotlightPos(x, y) {
+    const offset = spotlight.offsetHeight / 6;
+    const targetY = y - offset;
+
     spotlight.style.left = x + 'px';
-    spotlight.style.top = y + 'px';
+    spotlight.style.top = targetY + 'px';
 
     const rect = subText.getBoundingClientRect();
     const localX = x - rect.left;
-    const localY = y - rect.top;
+    const localY = targetY - rect.top;
 
     subText.style.setProperty('--sub-x', localX + 'px');
     subText.style.setProperty('--sub-y', localY + 'px');
