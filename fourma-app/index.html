@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Fourma</title>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module">
+    import React from 'https://esm.sh/react@18';
+    import { createRoot } from 'https://esm.sh/react-dom@18/client';
+
+    const jsxSource = await fetch('./fourma-app.jsx').then(r => r.text());
+
+    const { code } = Babel.transform(jsxSource, {
+      presets: [['react', { runtime: 'classic' }]],
+      plugins: ['transform-modules-commonjs'],
+    });
+
+    const mod = { exports: {} };
+    new Function('React', 'require', 'module', 'exports', code)(
+      React,
+      (id) => { if (id === 'react') return React; throw new Error(`Cannot require "${id}"`); },
+      mod,
+      mod.exports
+    );
+
+    createRoot(document.getElementById('root')).render(
+      React.createElement(mod.exports.default)
+    );
+  </script>
+</body>
+</html>
