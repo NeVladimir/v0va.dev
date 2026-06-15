@@ -53,17 +53,35 @@ const LOCATIONS = {
     overview:'One of Europe\'s most exclusive alpine destinations. Strict building regulations preserve village character and protect long-term values. Limited supply, strong demand from European and GCC buyers.',
     rules:['EU citizens: unrestricted purchase','Non-EU: purchase via Austrian GmbH','New construction requires local authority approval','Rental restrictions apply in most zones'],
     activities:['World-class skiing','Summer hiking','Wellness & spa','Fine dining','Golf (summer)','Mountain biking'],
-    properties:['prop_lech_1','prop_lech_2']},
+    properties:['prop_lech_1','prop_lech_2'],
+    whatsOn:[
+      {type:'season',icon:'❄️',title:'Ski season opens Nov 29',sub:'Early snow forecast. Zürs lifts first, Lech main resort from Dec 6.',date:'In 5 months'},
+      {type:'opening',icon:'🍽',title:'Aurelio Restaurant reopens',sub:'Returns with new head chef and extended winter menu.',date:'Oct 15'},
+      {type:'event',icon:'🎪',title:'Lech Zuers Art Festival',sub:'Three-week festival across village venues. International artists in residence.',date:'Jul 18–Aug 8'},
+      {type:'culture',icon:'🎿',title:'Ski history exhibition opens',sub:'New permanent gallery at the Ski Museum. 120 years of alpine tradition.',date:'Open now'},
+    ]},
   hokkaido:{id:'hokkaido',name:'Hokkaido',country:'Japan',region:'Northern Japan',market:'+5.1% YTD',avgPrice:'¥350K/m²',foreign:'Conditions apply',foreignOk:false,tax:'~5%',
     overview:'Japan\'s northernmost island is an emerging international second-home market. Niseko has established foreign-buyer infrastructure.',
     rules:['No restrictions on freehold ownership','Municipality registration required','Agricultural land: restricted','2024: non-resident declaration required'],
     activities:['World-class powder skiing','Onsen & ryokan','Local seafood','Summer trekking','Wildlife watching','Cycling'],
-    properties:['prop_hokkaido_1']},
+    properties:['prop_hokkaido_1'],
+    whatsOn:[
+      {type:'season',icon:'❄️',title:'Powder season: Dec – Mar',sub:'Average 15m snowfall. Best powder window: January – February.',date:'In 6 months'},
+      {type:'opening',icon:'🍜',title:'New ramen district · Sapporo',sub:'Six acclaimed Hokkaido chefs open a collective dining space in the city center.',date:'Opens Sep 1'},
+      {type:'event',icon:'🌸',title:'Hokkaido Flower Festival',sub:'Lavender fields at Furano peak in mid-July. Most visited natural event on the island.',date:'Jul 10–25'},
+      {type:'culture',icon:'🦊',title:'Wildlife Park expands',sub:'New nocturnal wildlife zone near Asahikawa. Red foxes, owls, and deer.',date:'Open now'},
+    ]},
   tuscany:{id:'tuscany',name:'Tuscany',country:'Italy',region:'Central Italy',market:'+1.4% YTD',avgPrice:'€3,200/m²',foreign:'EU friendly',foreignOk:true,tax:'~3%',
     overview:'Timeless lifestyle destination. Italy\'s Flat Tax regime (€100K/year) attracts HNW relocations. Rural properties may qualify for renovation incentives.',
     rules:['EU citizens: fully unrestricted','Non-EU: bilateral treaty framework','Flat Tax option for new fiscal residents','Agriturismo zoning: specific rules'],
     activities:['Wine & gastronomy','Art & architecture','Countryside cycling','Thermal spas','Truffle hunting','Cooking schools'],
-    properties:['prop_tuscany_1']},
+    properties:['prop_tuscany_1'],
+    whatsOn:[
+      {type:'season',icon:'🍇',title:'Harvest season begins',sub:'Chianti grape harvest late September. Participate in vendemmia at estate vineyards.',date:'In 3 months'},
+      {type:'event',icon:'🐎',title:'Palio di Siena',sub:'Medieval horse race in Piazza del Campo. The most visceral event in Italy.',date:'Aug 16'},
+      {type:'opening',icon:'🏛',title:'Uffizi Botticelli wing reopens',sub:'Renovation complete. New gallery with 40 works by Botticelli.',date:'Open now'},
+      {type:'culture',icon:'🍄',title:'White truffle season',sub:'San Miniato truffle fair and hunts available. Best in Italy.',date:'Oct – Dec'},
+    ]},
 };
 
 const ACTIVITIES = {
@@ -275,6 +293,37 @@ const LocationPage = ({data,navigate}) => {
                   </div>
                 </div>
               ))}
+            </Stack>
+          </Section>
+          <Hr/>
+          <Section title="What's On" action="See all">
+            <Stack gap={9}>
+              {(loc.whatsOn||[]).map((item,i)=>{
+                const typeColor = {season:C.green,opening:C.amber,event:C.text1,culture:C.text2}[item.type]||C.text2;
+                const typeBg   = {season:C.greenBg,opening:C.amberBg,event:C.surface,culture:C.surface}[item.type]||C.surface;
+                const typeLabel= {season:'Season',opening:'New Opening',event:'Event',culture:'Culture'}[item.type]||item.type;
+                return (
+                  <div key={i} style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:10,overflow:'hidden'}}>
+                    {/* Image placeholder for events/openings */}
+                    {(item.type==='event'||item.type==='opening') && (
+                      <div style={{height:64,background:C.border,display:'flex',alignItems:'center',justifyContent:'center'}}>
+                        <span style={tx(9,400,C.text3)}>[ {item.title} · photo ]</span>
+                      </div>
+                    )}
+                    <div style={{padding:'10px 12px'}}>
+                      <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:4}}>
+                        <div style={{display:'flex',alignItems:'center',gap:6}}>
+                          <span style={{fontSize:14}}>{item.icon}</span>
+                          <span style={tx(12,500)}>{item.title}</span>
+                        </div>
+                        <Tag label={typeLabel} color={typeColor} bg={typeBg}/>
+                      </div>
+                      <div style={{...tx(11,400,C.text2),lineHeight:'16px',marginBottom:5}}>{item.sub}</div>
+                      <div style={tx(10,500,C.text3)}>{item.date}</div>
+                    </div>
+                  </div>
+                );
+              })}
             </Stack>
           </Section>
           <Hr/>
@@ -1175,10 +1224,15 @@ const TODAY_ITEMS = [
   {type:'homes',profile:null,tag:'LECH CHALET · OWNERSHIP',title:'Bill due: HOA fee · €840',sub:'Due July 1 · Tap to review',nav:['home',{id:'home_lech'}],hasImage:false},
   {type:'deals',profile:null,tag:'TUSCANY · DEAL',title:'Due diligence: 2 documents pending',sub:'Legal review in progress →',nav:['deal',{propId:'prop_tuscany_1'}],hasImage:false},
   {type:'matches',profile:'sp_alpine',tag:'ALPINE PROFILE · NEW MATCH',title:'New match: Chalet · Kitzbühel · €1.8M',sub:'Matches your Alpine profile →',nav:['property',{id:'prop_lech_2'}],hasImage:true,imageLabel:'Chalet · Kitzbühel'},
+  {type:'insights',profile:null,tag:'LECH · EVENT',title:'Lech Zuers Art Festival  ·  Jul 18–Aug 8',sub:'Three-week festival across village venues. Artists in residence.',nav:['location',{id:'lech'}],hasImage:true,imageLabel:'Lech Art Festival'},
   {type:'homes',profile:null,tag:'LECH CHALET · STAY',title:'Your stay starts in 14 days',sub:'Jul 14–21 · Check-in details →',nav:['home',{id:'home_lech'}],hasImage:true,imageLabel:'Chalet Lech'},
+  {type:'insights',profile:null,tag:'TUSCANY · EVENT',title:'Palio di Siena  ·  Aug 16',sub:'Medieval horse race in Piazza del Campo.',nav:['location',{id:'tuscany'}],hasImage:true,imageLabel:'Palio di Siena'},
   {type:'matches',profile:'sp_japan',tag:'JAPAN PROFILE · NEW MATCH',title:'New villa · Niseko · ¥210M',sub:'Matches your Japan profile →',nav:['property',{id:'prop_hokkaido_1'}],hasImage:true,imageLabel:'Villa · Niseko'},
-  {type:'insights',profile:null,tag:'HOKKAIDO · LOCATION INSIGHT',title:'Foreign ownership regulations updated',sub:'Key changes for non-residents →',nav:['location',{id:'hokkaido'}],hasImage:true,imageLabel:'Hokkaido, Japan'},
-  {type:'insights',profile:null,tag:'ALPINE · MARKET SIGNAL',title:'Alpine prices up 3.2% YTD',sub:'Read full analysis →',nav:['location',{id:'lech'}],hasImage:true,imageLabel:'Market chart'},
+  {type:'insights',profile:null,tag:'HOKKAIDO · NEW OPENING',title:'New ramen district opens · Sapporo  ·  Sep 1',sub:'Six acclaimed Hokkaido chefs open a collective dining space.',nav:['location',{id:'hokkaido'}],hasImage:true,imageLabel:'Sapporo ramen district'},
+  {type:'insights',profile:null,tag:'LECH · SEASON',title:'Ski season opens Nov 29',sub:'Early snow forecast. Book your stay now →',nav:['location',{id:'lech'}],hasImage:true,imageLabel:'Lech powder season'},
+  {type:'insights',profile:null,tag:'TUSCANY · SEASON',title:'Harvest season begins  ·  late September',sub:'Chianti grape harvest. Participate in vendemmia →',nav:['location',{id:'tuscany'}],hasImage:true,imageLabel:'Tuscany harvest'},
+  {type:'insights',profile:null,tag:'HOKKAIDO · LOCATION INSIGHT',title:'Foreign ownership regulations updated',sub:'Key changes for non-residents →',nav:['location',{id:'hokkaido'}],hasImage:false},
+  {type:'insights',profile:null,tag:'ALPINE · MARKET SIGNAL',title:'Alpine prices up 3.2% YTD',sub:'Read full analysis →',nav:['location',{id:'lech'}],hasImage:true,imageLabel:'Alpine market chart'},
 ];
 
 const TodayScreen = ({navigate}) => {
