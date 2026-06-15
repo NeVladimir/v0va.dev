@@ -569,10 +569,10 @@ const ProjectIntakePage = ({data}) => {
               {answers[1]==='Prefab by Pagano'
                 ? 'Browse Pagano catalog and select your model. Our team will handle planning, permits, and build coordination.'
                 : answers[1]==='Sell a 75% stake'
-                  ? 'An advisor will run a valuation and prepare a co-ownership structure proposal within 5 business days.'
-                  : answers[1]==='Join Fourma Homes'
-                    ? 'We\'ll assess your property against Fourma standards and propose a renovation scope and partnership terms.'
-                    : 'Book a 30-minute advisory call. Our team will review your situation and outline a project plan.'}
+                ? 'An advisor will run a valuation and prepare a co-ownership structure proposal within 5 business days.'
+                : answers[1]==='Join Fourma Homes'
+                ? 'We\'ll assess your property against Fourma standards and propose a renovation scope and partnership terms.'
+                : 'Book a 30-minute advisory call. Our team will review your situation and outline a project plan.'}
             </div>
           </div>
         </div>
@@ -787,7 +787,7 @@ const StaysPage = ({navigate}) => {
           <Stack gap={10}>
             {shown.map(s=>(
               <div key={s.id} onClick={s.homeId?()=>navigate('home',{id:s.homeId}):undefined}
-                   style={{padding:14,background:C.surface,border:`1px solid ${C.border}`,borderRadius:12,cursor:s.homeId?'pointer':'default'}}>
+                style={{padding:14,background:C.surface,border:`1px solid ${C.border}`,borderRadius:12,cursor:s.homeId?'pointer':'default'}}>
                 <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:4}}>
                   <div>
                     <div style={tx(13,500)}>{s.home}</div>
@@ -996,7 +996,7 @@ const ProfileEditorPage = ({data}) => {
             ))}
           </div>
           <input value={name} onChange={e=>setName(e.target.value)} placeholder="Profile name (e.g. Alpine chalet)"
-                 style={{width:'100%',height:44,border:`1px solid ${C.border}`,borderRadius:10,padding:'0 14px',...tx(13,400,C.text1),outline:'none',background:C.surface,boxSizing:'border-box'}}/>
+            style={{width:'100%',height:44,border:`1px solid ${C.border}`,borderRadius:10,padding:'0 14px',...tx(13,400,C.text1),outline:'none',background:C.surface,boxSizing:'border-box'}}/>
         </Section>
 
         <Hr/>
@@ -1098,17 +1098,87 @@ const TravelHomePage = ({data}) => {
   );
 };
 
+// ── Travel All Page ────────────────────────────────────────
+const TRAVEL_ALL = [
+  {id:'th1',name:'Kyoto Machiya',location:'Kyoto, Japan',type:'Traditional house',size:'120m²',beds:2,nights:3,available:true,tags:['Cultural','City','Year-round']},
+  {id:'th2',name:'Florence Apartment',location:'Florence, Italy',type:'Historic apartment',size:'90m²',beds:2,nights:4,available:true,tags:['Cultural','City','Year-round']},
+  {id:'th3',name:'Verbier Chalet',location:'Verbier, Switzerland',type:'Alpine chalet',size:'180m²',beds:4,nights:5,available:false,tags:['Mountain','Ski','Winter']},
+  {id:'th4',name:'Bali Villa',location:'Canggu, Bali',type:'Villa',size:'240m²',beds:3,nights:4,available:true,tags:['Beach','Tropical','Year-round']},
+  {id:'th5',name:'Niseko Cabin',location:'Niseko, Japan',type:'Forest cabin',size:'80m²',beds:2,nights:3,available:true,tags:['Mountain','Ski','Winter']},
+  {id:'th6',name:'Amalfi House',location:'Positano, Italy',type:'Cliffside house',size:'150m²',beds:3,nights:5,available:true,tags:['Beach','Cultural','Summer']},
+  {id:'th7',name:'Lech Studio',location:'Lech, Austria',type:'Ski studio',size:'55m²',beds:1,nights:2,available:true,tags:['Mountain','Ski','Winter']},
+  {id:'th8',name:'Dubai Penthouse',location:'Dubai, UAE',type:'Penthouse',size:'320m²',beds:4,nights:6,available:false,tags:['City','Luxury','Year-round']},
+];
+
+const TravelAllPage = ({navigate}) => {
+  const [filter,setFilter] = useState('All');
+  const regionFilters = ['All','Mountain','Beach','Cultural','City'];
+  const filtered = filter==='All' ? TRAVEL_ALL : TRAVEL_ALL.filter(h=>h.tags.includes(filter));
+  const available = filtered.filter(h=>h.available).length;
+  return (
+    <div style={{height:'100%',display:'flex',flexDirection:'column'}}>
+      <div style={{padding:'10px 20px',background:C.text1,flexShrink:0}}>
+        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+          <div>
+            <div style={tx(11,500,C.white)}>Travel Balance</div>
+            <div style={{...tx(10,400),color:'rgba(255,255,255,0.6)',marginTop:1}}>Use across all Fourma Homes</div>
+          </div>
+          <div><span style={tx(22,300,C.white)}>18</span><span style={{...tx(10,400),color:'rgba(255,255,255,0.6)'}}> nights</span></div>
+        </div>
+      </div>
+      <div style={{padding:'10px 20px 8px',borderBottom:`1px solid ${C.border}`,flexShrink:0}}>
+        <FilterRow options={regionFilters} active={filter} setActive={setFilter}/>
+      </div>
+      <div style={{flex:1,overflowY:'auto',padding:'12px 20px 96px'}}>
+        <div style={{...tx(11,400,C.text2),marginBottom:12}}>{available} available · {filtered.length} homes</div>
+        <Stack gap={12}>
+          {filtered.map((h,i)=>(
+            <TapCard key={i} onTap={()=>navigate('travel-home',{id:h.id})}>
+              <div style={{height:120,background:C.border,display:'flex',alignItems:'center',justifyContent:'center',position:'relative'}}>
+                <span style={tx(10,400,C.text3)}>[ {h.name} · photo ]</span>
+                <div style={{position:'absolute',top:8,right:8,padding:'3px 8px',background:h.available?'rgba(58,125,68,0.9)':'rgba(0,0,0,0.55)',borderRadius:4}}>
+                  <span style={tx(9,500,C.white)}>{h.available?'Available':'Unavailable'}</span>
+                </div>
+              </div>
+              <div style={{padding:'12px 14px'}}>
+                <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:4}}>
+                  <div>
+                    <div style={tx(13,600)}>{h.name}</div>
+                    <div style={{...tx(10,400,C.text3),marginTop:1}}>{h.location} · {h.type}</div>
+                  </div>
+                  <div style={{textAlign:'right',flexShrink:0}}>
+                    <div style={tx(12,600)}>from {h.nights}</div>
+                    <div style={tx(9,400,C.text3)}>nights</div>
+                  </div>
+                </div>
+                <div style={{display:'flex',gap:8,marginBottom:10}}>
+                  <StatBox label="Size" value={h.size}/>
+                  <StatBox label="Beds" value={`${h.beds} beds`}/>
+                  <StatBox label="Min stay" value={`${h.nights} nights`}/>
+                </div>
+                <div style={{display:'flex',gap:5,flexWrap:'wrap'}}>
+                  {h.tags.map((t,j)=><Chip key={j} label={t}/>)}
+                </div>
+              </div>
+            </TapCard>
+          ))}
+        </Stack>
+      </div>
+    </div>
+  );
+};
+
 // ═══ ROOT TAB SCREENS ══════════════════════════════════════
 
 // ── Today ──────────────────────────────────────────────────
 const TODAY_ITEMS = [
-  {type:'homes',profile:null,tag:'LECH CHALET · OWNERSHIP',title:'Bill due: HOA fee · €840',sub:'Due July 1 · Tap to review',nav:['home',{id:'home_lech'}]},
-  {type:'deals',profile:null,tag:'TUSCANY · DEAL',title:'Due diligence: 2 documents pending',sub:'Legal review in progress →',nav:['deal',{propId:'prop_tuscany_1'}]},
-  {type:'matches',profile:'sp_alpine',tag:'ALPINE PROFILE · NEW MATCH',title:'New match: Chalet · Kitzbühel · €1.8M',sub:'Matches your Alpine profile →',nav:['property',{id:'prop_lech_2'}]},
-  {type:'homes',profile:null,tag:'LECH CHALET · STAY',title:'Your stay starts in 14 days',sub:'Jul 14–21 · Check-in details →',nav:['home',{id:'home_lech'}]},
-  {type:'matches',profile:'sp_japan',tag:'JAPAN PROFILE · NEW MATCH',title:'New villa · Niseko · ¥210M',sub:'Matches your Japan profile →',nav:['property',{id:'prop_hokkaido_1'}]},
-  {type:'insights',profile:null,tag:'HOKKAIDO · LOCATION INSIGHT',title:'Foreign ownership regulations updated',sub:'Key changes for non-residents →',nav:['location',{id:'hokkaido'}]},
-  {type:'insights',profile:null,tag:'ALPINE · MARKET SIGNAL',title:'Alpine prices up 3.2% YTD',sub:'Read full analysis →',nav:['location',{id:'lech'}]},
+  {type:'homes',profile:null,tag:'LECH CHALET · OWNERSHIP',title:'Bill due: HOA fee · €840',sub:'Due July 1 · Tap to review',nav:['home',{id:'home_lech'}],hasImage:false},
+  {type:'deals',profile:null,tag:'TUSCANY · DEAL',title:'Due diligence: 2 documents pending',sub:'Legal review in progress →',nav:['deal',{propId:'prop_tuscany_1'}],hasImage:false},
+  {type:'matches',profile:'sp_alpine',tag:'ALPINE PROFILE · NEW MATCH',title:'New match: Chalet · Kitzbühel · €1.8M',sub:'Matches your Alpine profile →',nav:['property',{id:'prop_lech_2'}],hasImage:true,imageLabel:'Chalet · Kitzbühel'},
+  {type:'homes',profile:null,tag:'LECH CHALET · STAY',title:'Your stay starts in 14 days',sub:'Jul 14–21 · Check-in details →',nav:['home',{id:'home_lech'}],hasImage:true,imageLabel:'Chalet Lech'},
+  {type:'matches',profile:'sp_japan',tag:'JAPAN PROFILE · NEW MATCH',title:'New villa · Niseko · ¥210M',sub:'Matches your Japan profile →',nav:['property',{id:'prop_hokkaido_1'}],hasImage:true,imageLabel:'Villa · Niseko'},
+  {type:'insights',profile:null,tag:'HOKKAIDO · LOCATION INSIGHT',title:'Foreign ownership regulations updated',sub:'Key changes for non-residents →',nav:['location',{id:'hokkaido'}],hasImage:true,imageLabel:'Hokkaido, Japan'},
+  {type:'insights',profile:null,tag:'ALPINE · MARKET SIGNAL',title:'Alpine prices up 3.2% YTD',sub:'Read full analysis →',nav:['location',{id:'lech'}],hasImage:true,imageLabel:'Market chart'},
 ];
 
 const TodayScreen = ({navigate}) => {
@@ -1138,16 +1208,20 @@ const TodayScreen = ({navigate}) => {
       </div>
 
       <div style={{flex:1,overflowY:'auto',padding:'12px 20px 96px'}}>
-        <div style={{marginBottom:14}}>
-          <div style={tx(18,400)}>Good morning, Alex</div>
-          <div style={{...tx(12,400,C.text2),marginTop:2}}>Friday, 13 June · {filtered.length} updates</div>
-        </div>
         <Stack gap={10}>
           {filtered.map((item,i)=>(
-            <div key={i} onClick={()=>navigate(...item.nav)} style={{padding:14,background:C.surface,border:`1px solid ${C.border}`,borderRadius:10,cursor:'pointer'}}>
-              <div style={{...tx(9,500,C.text3),letterSpacing:'0.1em',marginBottom:5}}>{item.tag}</div>
-              <div style={tx(12,500)}>{item.title}</div>
-              <div style={{...tx(11,400,C.text2),marginTop:2}}>{item.sub}</div>
+            <div key={i} onClick={()=>navigate(...item.nav)} style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:10,overflow:'hidden',cursor:'pointer'}}>
+              {/* Image placeholder for relevant items */}
+              {item.hasImage && (
+                <div style={{height:80,background:C.border,display:'flex',alignItems:'center',justifyContent:'center',borderBottom:`1px solid ${C.border}`}}>
+                  <span style={{...tx(9,400,C.text3)}}>[ {item.imageLabel} ]</span>
+                </div>
+              )}
+              <div style={{padding:'10px 14px'}}>
+                <div style={{...tx(9,500,C.text3),letterSpacing:'0.1em',marginBottom:5}}>{item.tag}</div>
+                <div style={tx(12,500)}>{item.title}</div>
+                <div style={{...tx(11,400,C.text2),marginTop:2}}>{item.sub}</div>
+              </div>
             </div>
           ))}
           {filtered.length===0 && (
@@ -1201,7 +1275,7 @@ const ExploreScreen = ({navigate}) => {
       <div style={{marginBottom:10}}>
         <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:8}}>
           <span style={tx(12,600)}>Fourma Travel</span>
-          <span style={tx(10,400,C.text3)}>View all ›</span>
+          <span onClick={()=>navigate('travel-all',{})} style={{...tx(10,400,C.text3),cursor:'pointer'}}>View all ›</span>
         </div>
         <div style={{padding:'10px 14px',marginBottom:10,background:C.text1,borderRadius:10,display:'flex',justifyContent:'space-between',alignItems:'center'}}>
           <div>
@@ -1414,7 +1488,7 @@ const AssistScreen = () => {
       </div>
       <div style={{padding:'10px 16px 24px',borderTop:`1px solid ${C.border}`,background:C.white,flexShrink:0,display:'flex',gap:8}}>
         <input value={inp} onChange={e=>setInp(e.target.value)} onKeyDown={e=>e.key==='Enter'&&send(inp)} placeholder="Ask anything…"
-               style={{flex:1,height:40,borderRadius:20,border:`1px solid ${C.border}`,padding:'0 14px',...tx(12,400,C.text1),outline:'none',background:C.surface}}/>
+          style={{flex:1,height:40,borderRadius:20,border:`1px solid ${C.border}`,padding:'0 14px',...tx(12,400,C.text1),outline:'none',background:C.surface}}/>
         <button onClick={()=>send(inp)} style={{width:40,height:40,borderRadius:20,background:C.accent,border:'none',color:C.white,cursor:'pointer',fontSize:16}}>↑</button>
       </div>
     </div>
@@ -1469,6 +1543,7 @@ const PAGE_TITLES={
   'travel-home':d=>TRAVEL_HOMES.find(h=>h.id===d.id)?.name||'Fourma Home',
   activities:d=>LOCATIONS[d.locationId]?.name+' · Activities'||'Activities',
   stays:()=>'My Stays',
+  'travel-all':()=>'Fourma Travel',
   'project-intake':()=>'New Project',
   project:d=>(PROJECTS.find(p=>p.id===d.id)?.name)||'Project',
 };
@@ -1507,6 +1582,7 @@ const AppShell=({tab,setTab})=>{
           {!isRoot && current.screen==='profile-feed'  && <ProfileFeedPage data={current.data} navigate={navigate}/>}
           {!isRoot && current.screen==='profile-editor'&& <ProfileEditorPage data={current.data} navigate={navigate}/>}
           {!isRoot && current.screen==='travel-home'   && <TravelHomePage data={current.data} navigate={navigate}/>}
+          {!isRoot && current.screen==='travel-all'    && <TravelAllPage navigate={navigate}/>}
           {!isRoot && current.screen==='stays'         && <StaysPage navigate={navigate}/>}
           {!isRoot && current.screen==='project-intake' && <ProjectIntakePage data={current.data} navigate={navigate}/>}
           {!isRoot && current.screen==='project'        && <ProjectDetailPage data={current.data} navigate={navigate}/>}
