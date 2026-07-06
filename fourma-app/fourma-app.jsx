@@ -53,17 +53,35 @@ const LOCATIONS = {
     overview:'One of Europe\'s most exclusive alpine destinations. Strict building regulations preserve village character and protect long-term values. Limited supply, strong demand from European and GCC buyers.',
     rules:['EU citizens: unrestricted purchase','Non-EU: purchase via Austrian GmbH','New construction requires local authority approval','Rental restrictions apply in most zones'],
     activities:['World-class skiing','Summer hiking','Wellness & spa','Fine dining','Golf (summer)','Mountain biking'],
-    properties:['prop_lech_1','prop_lech_2']},
+    properties:['prop_lech_1','prop_lech_2'],
+    whatsOn:[
+      {type:'season',icon:'❄️',title:'Ski season opens Nov 29',sub:'Early snow forecast. Zürs lifts first, Lech main resort from Dec 6.',date:'In 5 months'},
+      {type:'opening',icon:'🍽',title:'Aurelio Restaurant reopens',sub:'Returns with new head chef and extended winter menu.',date:'Oct 15'},
+      {type:'event',icon:'🎪',title:'Lech Zuers Art Festival',sub:'Three-week festival across village venues. International artists in residence.',date:'Jul 18–Aug 8'},
+      {type:'culture',icon:'🎿',title:'Ski history exhibition opens',sub:'New permanent gallery at the Ski Museum. 120 years of alpine tradition.',date:'Open now'},
+    ]},
   hokkaido:{id:'hokkaido',name:'Hokkaido',country:'Japan',region:'Northern Japan',market:'+5.1% YTD',avgPrice:'¥350K/m²',foreign:'Conditions apply',foreignOk:false,tax:'~5%',
     overview:'Japan\'s northernmost island is an emerging international second-home market. Niseko has established foreign-buyer infrastructure.',
     rules:['No restrictions on freehold ownership','Municipality registration required','Agricultural land: restricted','2024: non-resident declaration required'],
     activities:['World-class powder skiing','Onsen & ryokan','Local seafood','Summer trekking','Wildlife watching','Cycling'],
-    properties:['prop_hokkaido_1']},
+    properties:['prop_hokkaido_1'],
+    whatsOn:[
+      {type:'season',icon:'❄️',title:'Powder season: Dec – Mar',sub:'Average 15m snowfall. Best powder window: January – February.',date:'In 6 months'},
+      {type:'opening',icon:'🍜',title:'New ramen district · Sapporo',sub:'Six acclaimed Hokkaido chefs open a collective dining space in the city center.',date:'Opens Sep 1'},
+      {type:'event',icon:'🌸',title:'Hokkaido Flower Festival',sub:'Lavender fields at Furano peak in mid-July. Most visited natural event on the island.',date:'Jul 10–25'},
+      {type:'culture',icon:'🦊',title:'Wildlife Park expands',sub:'New nocturnal wildlife zone near Asahikawa. Red foxes, owls, and deer.',date:'Open now'},
+    ]},
   tuscany:{id:'tuscany',name:'Tuscany',country:'Italy',region:'Central Italy',market:'+1.4% YTD',avgPrice:'€3,200/m²',foreign:'EU friendly',foreignOk:true,tax:'~3%',
     overview:'Timeless lifestyle destination. Italy\'s Flat Tax regime (€100K/year) attracts HNW relocations. Rural properties may qualify for renovation incentives.',
     rules:['EU citizens: fully unrestricted','Non-EU: bilateral treaty framework','Flat Tax option for new fiscal residents','Agriturismo zoning: specific rules'],
     activities:['Wine & gastronomy','Art & architecture','Countryside cycling','Thermal spas','Truffle hunting','Cooking schools'],
-    properties:['prop_tuscany_1']},
+    properties:['prop_tuscany_1'],
+    whatsOn:[
+      {type:'season',icon:'🍇',title:'Harvest season begins',sub:'Chianti grape harvest late September. Participate in vendemmia at estate vineyards.',date:'In 3 months'},
+      {type:'event',icon:'🐎',title:'Palio di Siena',sub:'Medieval horse race in Piazza del Campo. The most visceral event in Italy.',date:'Aug 16'},
+      {type:'opening',icon:'🏛',title:'Uffizi Botticelli wing reopens',sub:'Renovation complete. New gallery with 40 works by Botticelli.',date:'Open now'},
+      {type:'culture',icon:'🍄',title:'White truffle season',sub:'San Miniato truffle fair and hunts available. Best in Italy.',date:'Oct – Dec'},
+    ]},
 };
 
 const ACTIVITIES = {
@@ -275,6 +293,37 @@ const LocationPage = ({data,navigate}) => {
                   </div>
                 </div>
               ))}
+            </Stack>
+          </Section>
+          <Hr/>
+          <Section title="What's On" action="See all">
+            <Stack gap={9}>
+              {(loc.whatsOn||[]).map((item,i)=>{
+                const typeColor = {season:C.green,opening:C.amber,event:C.text1,culture:C.text2}[item.type]||C.text2;
+                const typeBg   = {season:C.greenBg,opening:C.amberBg,event:C.surface,culture:C.surface}[item.type]||C.surface;
+                const typeLabel= {season:'Season',opening:'New Opening',event:'Event',culture:'Culture'}[item.type]||item.type;
+                return (
+                  <div key={i} style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:10,overflow:'hidden'}}>
+                    {/* Image placeholder for events/openings */}
+                    {(item.type==='event'||item.type==='opening') && (
+                      <div style={{height:64,background:C.border,display:'flex',alignItems:'center',justifyContent:'center'}}>
+                        <span style={tx(9,400,C.text3)}>[ {item.title} · photo ]</span>
+                      </div>
+                    )}
+                    <div style={{padding:'10px 12px'}}>
+                      <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:4}}>
+                        <div style={{display:'flex',alignItems:'center',gap:6}}>
+                          <span style={{fontSize:14}}>{item.icon}</span>
+                          <span style={tx(12,500)}>{item.title}</span>
+                        </div>
+                        <Tag label={typeLabel} color={typeColor} bg={typeBg}/>
+                      </div>
+                      <div style={{...tx(11,400,C.text2),lineHeight:'16px',marginBottom:5}}>{item.sub}</div>
+                      <div style={tx(10,500,C.text3)}>{item.date}</div>
+                    </div>
+                  </div>
+                );
+              })}
             </Stack>
           </Section>
           <Hr/>
@@ -569,10 +618,10 @@ const ProjectIntakePage = ({data}) => {
               {answers[1]==='Prefab by Pagano'
                 ? 'Browse Pagano catalog and select your model. Our team will handle planning, permits, and build coordination.'
                 : answers[1]==='Sell a 75% stake'
-                  ? 'An advisor will run a valuation and prepare a co-ownership structure proposal within 5 business days.'
-                  : answers[1]==='Join Fourma Homes'
-                    ? 'We\'ll assess your property against Fourma standards and propose a renovation scope and partnership terms.'
-                    : 'Book a 30-minute advisory call. Our team will review your situation and outline a project plan.'}
+                ? 'An advisor will run a valuation and prepare a co-ownership structure proposal within 5 business days.'
+                : answers[1]==='Join Fourma Homes'
+                ? 'We\'ll assess your property against Fourma standards and propose a renovation scope and partnership terms.'
+                : 'Book a 30-minute advisory call. Our team will review your situation and outline a project plan.'}
             </div>
           </div>
         </div>
@@ -787,7 +836,7 @@ const StaysPage = ({navigate}) => {
           <Stack gap={10}>
             {shown.map(s=>(
               <div key={s.id} onClick={s.homeId?()=>navigate('home',{id:s.homeId}):undefined}
-                   style={{padding:14,background:C.surface,border:`1px solid ${C.border}`,borderRadius:12,cursor:s.homeId?'pointer':'default'}}>
+                style={{padding:14,background:C.surface,border:`1px solid ${C.border}`,borderRadius:12,cursor:s.homeId?'pointer':'default'}}>
                 <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:4}}>
                   <div>
                     <div style={tx(13,500)}>{s.home}</div>
@@ -996,7 +1045,7 @@ const ProfileEditorPage = ({data}) => {
             ))}
           </div>
           <input value={name} onChange={e=>setName(e.target.value)} placeholder="Profile name (e.g. Alpine chalet)"
-                 style={{width:'100%',height:44,border:`1px solid ${C.border}`,borderRadius:10,padding:'0 14px',...tx(13,400,C.text1),outline:'none',background:C.surface,boxSizing:'border-box'}}/>
+            style={{width:'100%',height:44,border:`1px solid ${C.border}`,borderRadius:10,padding:'0 14px',...tx(13,400,C.text1),outline:'none',background:C.surface,boxSizing:'border-box'}}/>
         </Section>
 
         <Hr/>
@@ -1098,17 +1147,92 @@ const TravelHomePage = ({data}) => {
   );
 };
 
+// ── Travel All Page ────────────────────────────────────────
+const TRAVEL_ALL = [
+  {id:'th1',name:'Kyoto Machiya',location:'Kyoto, Japan',type:'Traditional house',size:'120m²',beds:2,nights:3,available:true,tags:['Cultural','City','Year-round']},
+  {id:'th2',name:'Florence Apartment',location:'Florence, Italy',type:'Historic apartment',size:'90m²',beds:2,nights:4,available:true,tags:['Cultural','City','Year-round']},
+  {id:'th3',name:'Verbier Chalet',location:'Verbier, Switzerland',type:'Alpine chalet',size:'180m²',beds:4,nights:5,available:false,tags:['Mountain','Ski','Winter']},
+  {id:'th4',name:'Bali Villa',location:'Canggu, Bali',type:'Villa',size:'240m²',beds:3,nights:4,available:true,tags:['Beach','Tropical','Year-round']},
+  {id:'th5',name:'Niseko Cabin',location:'Niseko, Japan',type:'Forest cabin',size:'80m²',beds:2,nights:3,available:true,tags:['Mountain','Ski','Winter']},
+  {id:'th6',name:'Amalfi House',location:'Positano, Italy',type:'Cliffside house',size:'150m²',beds:3,nights:5,available:true,tags:['Beach','Cultural','Summer']},
+  {id:'th7',name:'Lech Studio',location:'Lech, Austria',type:'Ski studio',size:'55m²',beds:1,nights:2,available:true,tags:['Mountain','Ski','Winter']},
+  {id:'th8',name:'Dubai Penthouse',location:'Dubai, UAE',type:'Penthouse',size:'320m²',beds:4,nights:6,available:false,tags:['City','Luxury','Year-round']},
+];
+
+const TravelAllPage = ({navigate}) => {
+  const [filter,setFilter] = useState('All');
+  const regionFilters = ['All','Mountain','Beach','Cultural','City'];
+  const filtered = filter==='All' ? TRAVEL_ALL : TRAVEL_ALL.filter(h=>h.tags.includes(filter));
+  const available = filtered.filter(h=>h.available).length;
+  return (
+    <div style={{height:'100%',display:'flex',flexDirection:'column'}}>
+      <div style={{padding:'10px 20px',background:C.text1,flexShrink:0}}>
+        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+          <div>
+            <div style={tx(11,500,C.white)}>Travel Balance</div>
+            <div style={{...tx(10,400),color:'rgba(255,255,255,0.6)',marginTop:1}}>Use across all Fourma Homes</div>
+          </div>
+          <div><span style={tx(22,300,C.white)}>18</span><span style={{...tx(10,400),color:'rgba(255,255,255,0.6)'}}> nights</span></div>
+        </div>
+      </div>
+      <div style={{padding:'10px 20px 8px',borderBottom:`1px solid ${C.border}`,flexShrink:0}}>
+        <FilterRow options={regionFilters} active={filter} setActive={setFilter}/>
+      </div>
+      <div style={{flex:1,overflowY:'auto',padding:'12px 20px 96px'}}>
+        <div style={{...tx(11,400,C.text2),marginBottom:12}}>{available} available · {filtered.length} homes</div>
+        <Stack gap={12}>
+          {filtered.map((h,i)=>(
+            <TapCard key={i} onTap={()=>navigate('travel-home',{id:h.id})}>
+              <div style={{height:120,background:C.border,display:'flex',alignItems:'center',justifyContent:'center',position:'relative'}}>
+                <span style={tx(10,400,C.text3)}>[ {h.name} · photo ]</span>
+                <div style={{position:'absolute',top:8,right:8,padding:'3px 8px',background:h.available?'rgba(58,125,68,0.9)':'rgba(0,0,0,0.55)',borderRadius:4}}>
+                  <span style={tx(9,500,C.white)}>{h.available?'Available':'Unavailable'}</span>
+                </div>
+              </div>
+              <div style={{padding:'12px 14px'}}>
+                <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:4}}>
+                  <div>
+                    <div style={tx(13,600)}>{h.name}</div>
+                    <div style={{...tx(10,400,C.text3),marginTop:1}}>{h.location} · {h.type}</div>
+                  </div>
+                  <div style={{textAlign:'right',flexShrink:0}}>
+                    <div style={tx(12,600)}>from {h.nights}</div>
+                    <div style={tx(9,400,C.text3)}>nights</div>
+                  </div>
+                </div>
+                <div style={{display:'flex',gap:8,marginBottom:10}}>
+                  <StatBox label="Size" value={h.size}/>
+                  <StatBox label="Beds" value={`${h.beds} beds`}/>
+                  <StatBox label="Min stay" value={`${h.nights} nights`}/>
+                </div>
+                <div style={{display:'flex',gap:5,flexWrap:'wrap'}}>
+                  {h.tags.map((t,j)=><Chip key={j} label={t}/>)}
+                </div>
+              </div>
+            </TapCard>
+          ))}
+        </Stack>
+      </div>
+    </div>
+  );
+};
+
 // ═══ ROOT TAB SCREENS ══════════════════════════════════════
 
 // ── Today ──────────────────────────────────────────────────
 const TODAY_ITEMS = [
-  {type:'homes',profile:null,tag:'LECH CHALET · OWNERSHIP',title:'Bill due: HOA fee · €840',sub:'Due July 1 · Tap to review',nav:['home',{id:'home_lech'}]},
-  {type:'deals',profile:null,tag:'TUSCANY · DEAL',title:'Due diligence: 2 documents pending',sub:'Legal review in progress →',nav:['deal',{propId:'prop_tuscany_1'}]},
-  {type:'matches',profile:'sp_alpine',tag:'ALPINE PROFILE · NEW MATCH',title:'New match: Chalet · Kitzbühel · €1.8M',sub:'Matches your Alpine profile →',nav:['property',{id:'prop_lech_2'}]},
-  {type:'homes',profile:null,tag:'LECH CHALET · STAY',title:'Your stay starts in 14 days',sub:'Jul 14–21 · Check-in details →',nav:['home',{id:'home_lech'}]},
-  {type:'matches',profile:'sp_japan',tag:'JAPAN PROFILE · NEW MATCH',title:'New villa · Niseko · ¥210M',sub:'Matches your Japan profile →',nav:['property',{id:'prop_hokkaido_1'}]},
-  {type:'insights',profile:null,tag:'HOKKAIDO · LOCATION INSIGHT',title:'Foreign ownership regulations updated',sub:'Key changes for non-residents →',nav:['location',{id:'hokkaido'}]},
-  {type:'insights',profile:null,tag:'ALPINE · MARKET SIGNAL',title:'Alpine prices up 3.2% YTD',sub:'Read full analysis →',nav:['location',{id:'lech'}]},
+  {type:'homes',profile:null,tag:'LECH CHALET · OWNERSHIP',title:'Bill due: HOA fee · €840',sub:'Due July 1 · Tap to review',nav:['home',{id:'home_lech'}],hasImage:false},
+  {type:'deals',profile:null,tag:'TUSCANY · DEAL',title:'Due diligence: 2 documents pending',sub:'Legal review in progress →',nav:['deal',{propId:'prop_tuscany_1'}],hasImage:false},
+  {type:'matches',profile:'sp_alpine',tag:'ALPINE PROFILE · NEW MATCH',title:'New match: Chalet · Kitzbühel · €1.8M',sub:'Matches your Alpine profile →',nav:['property',{id:'prop_lech_2'}],hasImage:true,imageLabel:'Chalet · Kitzbühel'},
+  {type:'insights',profile:null,tag:'LECH · EVENT',title:'Lech Zuers Art Festival  ·  Jul 18–Aug 8',sub:'Three-week festival across village venues. Artists in residence.',nav:['location',{id:'lech'}],hasImage:true,imageLabel:'Lech Art Festival'},
+  {type:'homes',profile:null,tag:'LECH CHALET · STAY',title:'Your stay starts in 14 days',sub:'Jul 14–21 · Check-in details →',nav:['home',{id:'home_lech'}],hasImage:true,imageLabel:'Chalet Lech'},
+  {type:'insights',profile:null,tag:'TUSCANY · EVENT',title:'Palio di Siena  ·  Aug 16',sub:'Medieval horse race in Piazza del Campo.',nav:['location',{id:'tuscany'}],hasImage:true,imageLabel:'Palio di Siena'},
+  {type:'matches',profile:'sp_japan',tag:'JAPAN PROFILE · NEW MATCH',title:'New villa · Niseko · ¥210M',sub:'Matches your Japan profile →',nav:['property',{id:'prop_hokkaido_1'}],hasImage:true,imageLabel:'Villa · Niseko'},
+  {type:'insights',profile:null,tag:'HOKKAIDO · NEW OPENING',title:'New ramen district opens · Sapporo  ·  Sep 1',sub:'Six acclaimed Hokkaido chefs open a collective dining space.',nav:['location',{id:'hokkaido'}],hasImage:true,imageLabel:'Sapporo ramen district'},
+  {type:'insights',profile:null,tag:'LECH · SEASON',title:'Ski season opens Nov 29',sub:'Early snow forecast. Book your stay now →',nav:['location',{id:'lech'}],hasImage:true,imageLabel:'Lech powder season'},
+  {type:'insights',profile:null,tag:'TUSCANY · SEASON',title:'Harvest season begins  ·  late September',sub:'Chianti grape harvest. Participate in vendemmia →',nav:['location',{id:'tuscany'}],hasImage:true,imageLabel:'Tuscany harvest'},
+  {type:'insights',profile:null,tag:'HOKKAIDO · LOCATION INSIGHT',title:'Foreign ownership regulations updated',sub:'Key changes for non-residents →',nav:['location',{id:'hokkaido'}],hasImage:false},
+  {type:'insights',profile:null,tag:'ALPINE · MARKET SIGNAL',title:'Alpine prices up 3.2% YTD',sub:'Read full analysis →',nav:['location',{id:'lech'}],hasImage:true,imageLabel:'Alpine market chart'},
 ];
 
 const TodayScreen = ({navigate}) => {
@@ -1138,16 +1262,20 @@ const TodayScreen = ({navigate}) => {
       </div>
 
       <div style={{flex:1,overflowY:'auto',padding:'12px 20px 96px'}}>
-        <div style={{marginBottom:14}}>
-          <div style={tx(18,400)}>Good morning, Alex</div>
-          <div style={{...tx(12,400,C.text2),marginTop:2}}>Friday, 13 June · {filtered.length} updates</div>
-        </div>
         <Stack gap={10}>
           {filtered.map((item,i)=>(
-            <div key={i} onClick={()=>navigate(...item.nav)} style={{padding:14,background:C.surface,border:`1px solid ${C.border}`,borderRadius:10,cursor:'pointer'}}>
-              <div style={{...tx(9,500,C.text3),letterSpacing:'0.1em',marginBottom:5}}>{item.tag}</div>
-              <div style={tx(12,500)}>{item.title}</div>
-              <div style={{...tx(11,400,C.text2),marginTop:2}}>{item.sub}</div>
+            <div key={i} onClick={()=>navigate(...item.nav)} style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:10,overflow:'hidden',cursor:'pointer'}}>
+              {/* Image placeholder for relevant items */}
+              {item.hasImage && (
+                <div style={{height:80,background:C.border,display:'flex',alignItems:'center',justifyContent:'center',borderBottom:`1px solid ${C.border}`}}>
+                  <span style={{...tx(9,400,C.text3)}}>[ {item.imageLabel} ]</span>
+                </div>
+              )}
+              <div style={{padding:'10px 14px'}}>
+                <div style={{...tx(9,500,C.text3),letterSpacing:'0.1em',marginBottom:5}}>{item.tag}</div>
+                <div style={tx(12,500)}>{item.title}</div>
+                <div style={{...tx(11,400,C.text2),marginTop:2}}>{item.sub}</div>
+              </div>
             </div>
           ))}
           {filtered.length===0 && (
@@ -1201,7 +1329,7 @@ const ExploreScreen = ({navigate}) => {
       <div style={{marginBottom:10}}>
         <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:8}}>
           <span style={tx(12,600)}>Fourma Travel</span>
-          <span style={tx(10,400,C.text3)}>View all ›</span>
+          <span onClick={()=>navigate('travel-all',{})} style={{...tx(10,400,C.text3),cursor:'pointer'}}>View all ›</span>
         </div>
         <div style={{padding:'10px 14px',marginBottom:10,background:C.text1,borderRadius:10,display:'flex',justifyContent:'space-between',alignItems:'center'}}>
           <div>
@@ -1414,7 +1542,7 @@ const AssistScreen = () => {
       </div>
       <div style={{padding:'10px 16px 24px',borderTop:`1px solid ${C.border}`,background:C.white,flexShrink:0,display:'flex',gap:8}}>
         <input value={inp} onChange={e=>setInp(e.target.value)} onKeyDown={e=>e.key==='Enter'&&send(inp)} placeholder="Ask anything…"
-               style={{flex:1,height:40,borderRadius:20,border:`1px solid ${C.border}`,padding:'0 14px',...tx(12,400,C.text1),outline:'none',background:C.surface}}/>
+          style={{flex:1,height:40,borderRadius:20,border:`1px solid ${C.border}`,padding:'0 14px',...tx(12,400,C.text1),outline:'none',background:C.surface}}/>
         <button onClick={()=>send(inp)} style={{width:40,height:40,borderRadius:20,background:C.accent,border:'none',color:C.white,cursor:'pointer',fontSize:16}}>↑</button>
       </div>
     </div>
@@ -1469,6 +1597,7 @@ const PAGE_TITLES={
   'travel-home':d=>TRAVEL_HOMES.find(h=>h.id===d.id)?.name||'Fourma Home',
   activities:d=>LOCATIONS[d.locationId]?.name+' · Activities'||'Activities',
   stays:()=>'My Stays',
+  'travel-all':()=>'Fourma Travel',
   'project-intake':()=>'New Project',
   project:d=>(PROJECTS.find(p=>p.id===d.id)?.name)||'Project',
 };
@@ -1507,6 +1636,7 @@ const AppShell=({tab,setTab})=>{
           {!isRoot && current.screen==='profile-feed'  && <ProfileFeedPage data={current.data} navigate={navigate}/>}
           {!isRoot && current.screen==='profile-editor'&& <ProfileEditorPage data={current.data} navigate={navigate}/>}
           {!isRoot && current.screen==='travel-home'   && <TravelHomePage data={current.data} navigate={navigate}/>}
+          {!isRoot && current.screen==='travel-all'    && <TravelAllPage navigate={navigate}/>}
           {!isRoot && current.screen==='stays'         && <StaysPage navigate={navigate}/>}
           {!isRoot && current.screen==='project-intake' && <ProjectIntakePage data={current.data} navigate={navigate}/>}
           {!isRoot && current.screen==='project'        && <ProjectDetailPage data={current.data} navigate={navigate}/>}
