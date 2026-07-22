@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Fourma — AI-first discovery for a home abroad." />
+  <title>Fourma — Find the place that fits your life</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#" data-view="home" aria-label="Fourma home"><img src="assets/Fourma.svg" alt="Fourma" /></a>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="#how">How it works</a><a href="#research">What we research</a>
+    </nav>
+    <div class="header-actions"><button class="text-button">Sign in</button><button class="round-button" data-start>Start discovering <span>↗</span></button></div>
+  </header>
+
+  <main>
+    <section id="home" class="view active-view">
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow"><span></span> AI-guided home discovery</p>
+          <h1>Find the place<br />that fits your life.</h1>
+          <p class="hero-lead">Describe the life you want. Fourma researches the world to find the right location—and ready homes that belong there.</p>
+          <button class="primary-button" data-start>Describe your ideal life <span>↗</span></button>
+          <p class="no-account">No account needed · Your first research is complimentary</p>
+        </div>
+        <div class="hero-visual">
+          <img src="assets/coast-hero.png" alt="Quiet Mediterranean coastal town" />
+          <div class="floating-card location-chip"><span class="pin">⌖</span><div><b>Hydra, Greece</b><small>Quiet island life · Car-free</small></div></div>
+          <div class="floating-card insight-chip"><small>FOURMA INSIGHT</small><p>Strong fit for slow summers, sailing and a close-knit international community.</p><div class="signal"><span></span><span></span><span></span><span></span></div></div>
+          <div class="image-index">01 <span></span> 03</div>
+        </div>
+      </div>
+
+      <section id="how" class="steps-section">
+        <div><p class="eyebrow"><span></span> A different starting point</p><h2>Not a property search.<br />A life search.</h2></div>
+        <div class="steps">
+          <article><b>01</b><h3>Tell us about your life</h3><p>A natural conversation about how you want to live, who comes with you and what matters.</p></article>
+          <article><b>02</b><h3>Discover your place</h3><p>We translate your preferences into precise destinations, with honest advantages and compromises.</p></article>
+          <article><b>03</b><h3>Research with confidence</h3><p>Current location intelligence and ready homes, backed by sources and explained for you.</p></article>
+        </div>
+      </section>
+      <section id="research" class="research-strip"><span>LOCATION</span><span>CLIMATE</span><span>ACCESS</span><span>MARKET</span><span>OWNERSHIP</span><span>HOMES</span></section>
+    </section>
+
+    <section id="discover" class="view app-view">
+      <aside class="app-sidebar">
+        <div><p class="eyebrow"><span></span> Your search profile</p><h2>Your life abroad</h2><p class="profile-note">Built live from your conversation</p></div>
+        <div class="profile-progress"><div><span>Profile clarity</span><b id="clarity">64%</b></div><i><em id="progressBar"></em></i></div>
+        <div class="profile-fields" id="profileFields"></div>
+        <p class="privacy-note">Your confirmed preferences only change when you ask.</p>
+      </aside>
+      <div class="conversation">
+        <div class="conversation-top"><div><span class="status-dot"></span><small>FOURMA AI</small></div><button class="icon-button" data-home>×</button></div>
+        <div class="messages" id="messages">
+          <div class="day-label">TODAY</div>
+          <div class="message ai"><img src="assets/Symbol.svg" alt="" /><div><p>Let’s begin with the life, not the property.</p><p>Tell me what your ideal life in a home abroad looks like—how would you spend a typical day there?</p></div></div>
+          <div class="suggestions" id="suggestions"></div>
+        </div>
+        <form class="composer" id="chatForm"><input id="chatInput" aria-label="Message Fourma" placeholder="Tell Fourma more…" autocomplete="off" /><button aria-label="Send message">↑</button></form>
+        <p class="ai-disclaimer">Fourma can make mistakes. Important facts are checked and sourced in your research.</p>
+      </div>
+    </section>
+
+    <section id="researching" class="view research-view">
+      <div class="research-map"><img src="assets/coast-hero.png" alt="Mediterranean research area" /><div class="map-grid"></div><div class="scan-line"></div><div class="map-pin main-pin"><span></span>Hydra</div><div class="map-pin pin-two"><span></span>Piraeus</div><div class="map-pin pin-three"><span></span>Poros</div></div>
+      <div class="research-panel">
+        <button class="research-close" data-back>×</button><p class="eyebrow"><span></span> Live location research</p><h1>Building your<br />Hydra intelligence.</h1><p class="research-sub">Fourma is discovering and checking open-web sources against your Search Profile. This takes about 15 seconds in the prototype.</p>
+        <div class="pipeline" id="pipeline">
+          <div data-stage="0"><i></i><span><b>Resolving location boundary</b><small>Hydra island · Attica · Greece</small></span><em>WAITING</em></div>
+          <div data-stage="1"><i></i><span><b>Discovering trusted sources</b><small>Broker, government, travel and market sources</small></span><em>WAITING</em></div>
+          <div data-stage="2"><i></i><span><b>Collecting location intelligence</b><small>Climate, access, ownership and current signals</small></span><em>WAITING</em></div>
+          <div data-stage="3"><i></i><span><b>Extracting ready-home listings</b><small>Normalizing facts across previously unknown sites</small></span><em>WAITING</em></div>
+          <div data-stage="4"><i></i><span><b>Merging duplicate listings</b><small>Comparing addresses, images and property facts</small></span><em>WAITING</em></div>
+          <div data-stage="5"><i></i><span><b>Matching homes to your profile</b><small>Explaining fit, compromises and uncertainty</small></span><em>WAITING</em></div>
+        </div>
+        <div class="live-metrics"><div><strong id="sourcesCount">0</strong><small>SOURCES FOUND</small></div><div><strong id="pagesCount">0</strong><small>PAGES PROCESSED</small></div><div><strong id="listingsCount">0</strong><small>LISTINGS EXTRACTED</small></div><div><strong id="dupesCount">0</strong><small>DUPLICATES MERGED</small></div></div>
+        <div class="research-progress"><i id="researchBar"></i></div><p class="research-time"><span id="researchStatus">Starting research…</span><b id="researchTimer">00:15</b></p>
+      </div>
+    </section>
+
+    <section id="results" class="view results-view">
+      <div class="result-hero">
+        <div class="result-image"><img src="assets/coast-hero.png" alt="Hydra coastline" /><button class="back-pill" data-back>← Back to conversation</button><span>HYDRA · GREECE</span></div>
+        <div class="result-summary"><p class="eyebrow"><span></span> Fourma conclusion</p><h1>A quiet island life,<br />with Athens in reach.</h1><p>Hydra gives you the pace, beauty and close community you described—without requiring complete isolation. It is strongest from May through September, with a genuine year-round local core.</p><div class="trade-grid"><div><small>WHY IT FITS</small><b>Walkable, car-free, strong sailing culture</b></div><div><small>KEEP IN MIND</small><b>Limited inventory and winter connections</b></div></div><div class="result-actions"><button class="primary-button" data-contact="follow">Follow Hydra</button><button class="secondary-button" data-contact="advisor">Contact an advisor</button></div></div>
+      </div>
+      <div class="intel-bar"><div><small>RESEARCHED</small><b>Today, 11:42</b></div><div><small>SOURCES REVIEWED</small><b>38 sources</b></div><div><small>READY HOMES FOUND</small><b>17 listings</b></div><button>View sources ↗</button></div>
+      <section class="location-intelligence">
+        <div class="intel-heading"><div><p class="eyebrow"><span></span> Location intelligence</p><h2>What living in Hydra<br />would actually mean.</h2></div><p>Fourma separates sourced facts, estimates and AI synthesis. Tax and legal notes are general information, not professional advice.</p></div>
+        <div class="intel-grid">
+          <article class="intel-feature"><small>LIFESTYLE FIT</small><h3>Slow, social and naturally outdoors.</h3><p>Daily life centres on the harbour, walking paths, swimming coves and a compact international community. Private cars are prohibited.</p><div class="fit-tags"><span>Sailing</span><span>Swimming</span><span>Local dining</span><span>Walkability</span></div></article>
+          <article><small>CLIMATE & SEASON</small><div class="season-chart"><i style="height:25%"></i><i style="height:29%"></i><i style="height:40%"></i><i style="height:56%"></i><i style="height:72%"></i><i style="height:87%"></i><i style="height:100%"></i><i style="height:98%"></i><i style="height:82%"></i><i style="height:61%"></i><i style="height:42%"></i><i style="height:30%"></i></div><div class="month-row"><span>JAN</span><span>APR</span><span>JUL</span><span>OCT</span></div><h3>Best fit: May—September</h3><p>Hot, dry summers with regular sea breezes. July and August are the busiest and warmest months.</p></article>
+          <article><small>ACCESS FROM LONDON</small><div class="route"><b>LHR</b><span>3h 40m flight</span><b>ATH</b><span>1h 40m ferry</span><b>HYD</b></div><h3>About 7 hours door to island</h3><p>Frequent summer flights to Athens, then ground transfer to Piraeus and hydrofoil. No airport on Hydra.</p></article>
+          <article><small>PROPERTY MARKET</small><div class="market-number">€7.2k<em>/ m² indicative</em></div><p>Scarce supply and protected architecture support values, but comparable evidence is limited and negotiation can be opaque.</p><div class="data-line"><span>Indicative asking range</span><b>€1.2M—€4.8M</b></div><div class="data-line"><span>Ready homes found</span><b>17</b></div></article>
+          <article><small>OWNERSHIP & COSTS</small><h3>Open to international buyers</h3><p>EU and non-EU residents can generally purchase, subject to standard legal and source-of-funds checks.</p><div class="data-line"><span>Transfer tax</span><b>~3.09%*</b></div><div class="data-line"><span>Buying costs</span><b>~7–10%*</b></div><div class="data-line"><span>Annual holding</span><b>Case-specific</b></div></article>
+          <article class="risk-card"><small>MATERIAL COMPROMISES</small><ul><li><b>Inventory</b><span>Few turnkey homes match all requirements.</span></li><li><b>Accessibility</b><span>Ferry dependency can disrupt winter travel.</span></li><li><b>Renovation</b><span>Strict heritage controls and island logistics.</span></li></ul></article>
+        </div>
+      </section>
+      <section class="activities-section">
+        <div class="activities-heading"><div><p class="eyebrow"><span></span> Life in the location</p><h2>What you could do<br />on an ordinary week.</h2></div><p>Selected around your preference for the sea, active days and a local social rhythm—not a generic tourist checklist.</p></div>
+        <div class="activity-filters" role="tablist"><button class="active" data-activity-filter="all">All activities <span>8</span></button><button data-activity-filter="water">On the water <span>3</span></button><button data-activity-filter="outdoors">Outdoors <span>2</span></button><button data-activity-filter="food">Food & social <span>2</span></button><button data-activity-filter="culture">Culture <span>1</span></button></div>
+        <div class="activity-grid">
+          <article class="activity-card featured" data-category="water"><div class="activity-photo activity-one"><img src="assets/coast-hero.png" alt="Sailing around Hydra" /><span>STRONG PROFILE FIT</span></div><div class="activity-body"><small>ON THE WATER · MAY—OCTOBER</small><h3>Sail the Saronic Gulf</h3><p>Day sails toward Dokos and Spetses, with protected anchorages and reliable summer winds.</p><div class="activity-meta"><span>Half or full day</span><span>From Hydra harbour</span></div><button class="activity-more">See details <span>↓</span></button><div class="activity-detail"><b>Why it fits you</b><p>Easy to make part of weekly life rather than a special excursion. Private charters and sailing clubs operate from the harbour.</p></div></div></article>
+          <article class="activity-card" data-category="water"><div class="activity-photo activity-two"><img src="assets/coast-hero.png" alt="Swimming cove" /></div><div class="activity-body"><small>ON THE WATER · MAY—OCTOBER</small><h3>Swim the coastal coves</h3><p>Clear-water swimming at Spilia, Hydronetta and quieter coves reached by foot or water taxi.</p><div class="activity-meta"><span>30 min—2 hours</span><span>5—20 min away</span></div><button class="activity-more">See details <span>↓</span></button><div class="activity-detail"><b>Why it fits you</b><p>Several coves are close enough for a daily morning swim before the harbour becomes busy.</p></div></div></article>
+          <article class="activity-card" data-category="outdoors"><div class="activity-photo activity-three"><img src="assets/coast-hero.png" alt="Hydra walking trail" /></div><div class="activity-body"><small>OUTDOORS · YEAR-ROUND</small><h3>Walk to Prophet Elias</h3><p>A stone path climbs through pine forest to the monastery and panoramic island views.</p><div class="activity-meta"><span>3—4 hours</span><span>Moderate</span></div><button class="activity-more">See details <span>↓</span></button><div class="activity-detail"><b>Good to know</b><p>Start early from June to September. The route is quieter and cooler in spring and autumn.</p></div></div></article>
+          <article class="activity-card" data-category="food"><div class="activity-graphic"><b>18</b><span>local tables<br />worth knowing</span></div><div class="activity-body"><small>FOOD & SOCIAL · YEAR-ROUND</small><h3>Harbour dinners and local tables</h3><p>From simple waterfront tavernas to small seasonal restaurants behind the port.</p><div class="activity-meta"><span>Walkable</span><span>Best after 20:00</span></div><button class="activity-more">See details <span>↓</span></button><div class="activity-detail"><b>Fourma shortlist</b><p>Our research found a strong everyday dining scene, though many venues close or reduce hours in winter.</p></div></div></article>
+          <article class="activity-card" data-category="culture"><div class="activity-graphic blue"><b>12+</b><span>exhibitions<br />each summer</span></div><div class="activity-body"><small>CULTURE · APRIL—OCTOBER</small><h3>DESTE and island exhibitions</h3><p>Contemporary art in a converted slaughterhouse, plus galleries around Hydra Town.</p><div class="activity-meta"><span>1—2 hours</span><span>Seasonal</span></div><button class="activity-more">See details <span>↓</span></button><div class="activity-detail"><b>Why it matters</b><p>The summer programme brings an international creative community without changing the island’s scale.</p></div></div></article>
+          <article class="activity-card" data-category="water"><div class="activity-photo activity-four"><img src="assets/coast-hero.png" alt="Sea kayaking" /></div><div class="activity-body"><small>ON THE WATER · APRIL—OCTOBER</small><h3>Kayak the east coast</h3><p>Explore rocky inlets and Mandraki bay independently or with a local guide.</p><div class="activity-meta"><span>2—3 hours</span><span>Beginner friendly</span></div><button class="activity-more">See details <span>↓</span></button><div class="activity-detail"><b>Best conditions</b><p>Early mornings are typically calmer. Guided routes adapt to wind and experience.</p></div></div></article>
+          <article class="activity-card" data-category="outdoors"><div class="activity-graphic cashmere"><b>80km</b><span>of marked and<br />informal trails</span></div><div class="activity-body"><small>OUTDOORS · OCTOBER—MAY</small><h3>Cross-island hiking</h3><p>Longer routes connect monasteries, remote beaches and Hydra’s interior ridgelines.</p><div class="activity-meta"><span>Half day</span><span>Moderate—hard</span></div><button class="activity-more">See details <span>↓</span></button><div class="activity-detail"><b>Seasonal fit</b><p>Particularly good in the shoulder months when temperatures are lower and paths are quiet.</p></div></div></article>
+          <article class="activity-card" data-category="food"><div class="activity-graphic dark"><b>Sat</b><span>slow lunch<br />ritual</span></div><div class="activity-body"><small>FOOD & SOCIAL · YEAR-ROUND</small><h3>Kamini weekend lunch</h3><p>A slower neighbourhood rhythm around the small fishing harbour west of town.</p><div class="activity-meta"><span>15 min walk</span><span>Local favourite</span></div><button class="activity-more">See details <span>↓</span></button><div class="activity-detail"><b>Why it fits you</b><p>It offers the close community feeling you described, away from the busiest part of Hydra port.</p></div></div></article>
+        </div>
+      </section>
+      <section class="properties"><div class="section-heading"><div><p class="eyebrow"><span></span> Best matches</p><h2>Ready homes in Hydra</h2></div><p>Three best results from 17 available properties, ordered by relevance to your profile.</p></div><div class="property-grid">
+        <article class="property-card" tabindex="0" data-property="0"><div class="property-image crop-one"><img src="assets/coast-hero.png" alt="Stone home overlooking Hydra" /><span>BEST FIT</span></div><div class="property-copy"><small>KAMINI · HYDRA</small><h3>Stone house above the harbour</h3><p class="price">€2,450,000</p><p>4 beds · 246 m² · Sea view</p><div class="fit">Quiet setting, walkable to the harbour and space for family visits.</div><button class="card-link">View property <span>↗</span></button></div></article>
+        <article class="property-card" tabindex="0" data-property="1"><div class="property-image crop-two"><img src="assets/coast-hero.png" alt="Villa by the marina" /></div><div class="property-copy"><small>HYDRA TOWN · HYDRA</small><h3>Restored captain's residence</h3><p class="price">€2,100,000</p><p>3 beds · 198 m² · Courtyard</p><div class="fit">Historic character with restaurants and the ferry within easy reach.</div><button class="card-link">View property <span>↗</span></button></div></article>
+        <article class="property-card" tabindex="0" data-property="2"><div class="property-image crop-three"><img src="assets/coast-hero.png" alt="Coastal home" /></div><div class="property-copy"><small>MANDRAKI · HYDRA</small><h3>Waterfront summer house</h3><p class="price">€1,780,000</p><p>3 beds · 174 m² · Waterfront</p><div class="fit">Direct sea access and privacy, with a longer walk into town.</div><button class="card-link">View property <span>↗</span></button></div></article>
+      </div><div class="unlock-more"><div><small>14 MORE MATCHING HOMES</small><h3>Continue your search with Fourma</h3><p>Create your saved Search Profile to see every extracted property and receive new matches weekly.</p></div><button class="primary-button" data-contact="view-all">View all 17 properties <span>↗</span></button></div></section>
+    </section>
+  </main>
+
+  <div class="overlay" id="contactOverlay" aria-hidden="true"><div class="contact-modal"><button class="modal-close" data-close-modal>×</button><p class="eyebrow"><span></span> Continue with Fourma</p><h2 id="contactTitle">See all matching homes.</h2><p id="contactIntro">Save your Search Profile and keep the complete Hydra research attached.</p><form id="contactForm"><label>YOUR NAME<input name="name" required placeholder="Full name" /></label><label>EMAIL ADDRESS<input name="email" type="email" required placeholder="name@example.com" /></label><label>COUNTRY OF RESIDENCE<input name="country" required placeholder="United Kingdom" /></label><label class="consent"><input type="checkbox" name="updates" checked /><span>Send me one thoughtful weekly update about Hydra and matching homes.</span></label><input type="hidden" name="intent" id="contactIntent" /><button class="primary-button" type="submit">Continue <span>↗</span></button><small class="form-note">No phone number required. You can unsubscribe at any time.</small></form><div class="form-success" id="formSuccess"><span>✓</span><h3>Your search is saved.</h3><p>We’ll keep your Hydra context and return you to exactly where you left off.</p><button class="primary-button" data-close-modal>Return to results</button></div></div></div>
+
+  <aside class="property-drawer" id="propertyDrawer" aria-hidden="true"><button class="drawer-close" data-close-drawer>×</button><div class="drawer-gallery"><img src="assets/coast-hero.png" alt="Hydra property" id="drawerImage" /><span id="drawerIndex">01 / 03</span><button>View gallery · 12 photos</button></div><div class="drawer-content"><small id="drawerLocation">KAMINI · HYDRA</small><h2 id="drawerTitle">Stone house above the harbour</h2><p class="drawer-price" id="drawerPrice">€2,450,000</p><div class="drawer-facts"><span><b>4</b>Bedrooms</span><span><b>3</b>Bathrooms</span><span><b>246</b>Internal m²</span><span><b>Ready</b>Status</span></div><div class="drawer-fit"><small>WHY IT FITS YOUR PROFILE</small><h3>Space for family, quiet mornings and the sea always in view.</h3><ul><li>Walkable to Kamini harbour and swimming coves</li><li>Separate guest level for adult children</li><li>Turnkey condition with protected island character</li></ul></div><div class="drawer-warning"><small>COMPROMISE</small><p>Approximately 22 minutes uphill from Hydra port; luggage transfer is required.</p></div><div class="drawer-source"><span><small>SOURCE</small><b>Local broker · Checked today</b></span><a href="#">Original listing ↗</a></div><div class="drawer-actions"><button class="primary-button" data-contact="property">Ask about this home</button><button class="secondary-button">Ask Fourma AI</button></div></div></aside><div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <script src="app.js"></script>
+</body>
+</html>
